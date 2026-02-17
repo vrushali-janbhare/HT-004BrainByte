@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Welcome {{ request.user.username }}</h2>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="card p-3 shadow">
+                <h5>Book Appointment</h5>
+                <a href="{% url 'book_appointment' %}" class="btn btn-success mt-2">Book Now</a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 shadow">
+                <h5>View Queue</h5>
+                <a href="{% url 'queue_status' %}" class="btn btn-info mt-2">Check Queue</a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 shadow">
+                <h5>My Appointments</h5>
+                <a href="#" class="btn btn-warning mt-2">View</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Doctor Queue Control Panel</h2>
+
+    <table class="table table-bordered table-striped">
+
+        <tr>
+            <th>Token</th>
+            <th>Patient</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for appt in appointments %}
+        <tr>
+            <td>{{ appt.queue_number }}</td>
+            <td>{{ appt.patient.username }}</td>
+            <td>{{ appt.status }}</td>
+
+            <td>
+                <a href="{% url 'mark_completed' appt.id %}" class="btn btn-success btn-sm">Complete</a>
+                <a href="{% url 'skip_patient' appt.id %}" class="btn btn-warning btn-sm">Skip</a>
+                <a href="{% url 'emergency_patient' appt.id %}" class="btn btn-danger btn-sm">Emergency</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+{% endblock %}
