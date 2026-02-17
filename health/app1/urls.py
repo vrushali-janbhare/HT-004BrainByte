@@ -9,6 +9,9 @@ urlpatterns = [
       path('complete/<int:id>/', views.mark_completed, name='mark_completed'),
       path('skip/<int:id>/', views.skip_patient, name='skip_patient'),
       path('emergency/<int:id>/', views.emergency_patient, name='emergency_patient'),
+      path('start/<int:id>/', views.start_consultation, name='start_consultation'),
+      path('queue/', views.queue_status, name='queue_status'),
+
 
        
 ]

@@ -25,6 +25,9 @@
                 <a href="{% url 'mark_completed' appt.id %}" class="btn btn-success btn-sm">Complete</a>
                 <a href="{% url 'skip_patient' appt.id %}" class="btn btn-warning btn-sm">Skip</a>
                 <a href="{% url 'emergency_patient' appt.id %}" class="btn btn-danger btn-sm">Emergency</a>
+                <a href="{% url 'start_consultation' appt.id %}" class="btn btn-primary btn-sm">Start</a>
+                <a href="{% url 'mark_completed' appt.id %}" class="btn btn-success btn-sm">Complete</a>
+
             </td>
         </tr>
         {% endfor %}

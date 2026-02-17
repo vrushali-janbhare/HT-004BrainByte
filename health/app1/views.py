@@ -79,6 +79,60 @@ def emergency_patient(request, id):
     return redirect('doctor_panel')
 
 
+@staff_member_required
+def start_consultation(request, id):
+    appt = Appointment.objects.get(id=id)
+    appt.start_time = timezone.now()
+    appt.status = "In Progress"
+    appt.save()
+    return redirect('doctor_panel')
+
+
+
+
+    from django.db.models import Avg
+from datetime import timedelta
+
+@login_required
+def queue_status(request):
+
+    my_appointment = Appointment.objects.filter(patient=request.user).last()
+
+    remaining = Appointment.objects.filter(
+        date=my_appointment.date,
+        queue_number__lt=my_appointment.queue_number,
+        status='Waiting'
+    ).count()
+
+    # Calculate avg consultation time
+    completed = Appointment.objects.filter(
+        status='Completed',
+        start_time__isnull=False,
+        end_time__isnull=False
+    )
+
+    total_time = []
+
+    for appt in completed:
+        duration = appt.end_time - appt.start_time
+        total_time.append(duration.total_seconds()/60)
+
+    if total_time:
+        avg_time = sum(total_time) / len(total_time)
+    else:
+        avg_time = 10
+
+    wait_time = int(remaining * avg_time)
+
+    context = {
+        'appointment': my_appointment,
+        'remaining': remaining,
+        'wait_time': wait_time,
+        'avg_time': int(avg_time)
+    }
+
+    return render(request, 'queue.html', context)
+
 
 
 
