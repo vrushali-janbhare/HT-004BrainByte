@@ -1,28 +1,18 @@
 from django.db import models
-from django.contrib.auth.models import User
 
-class Appointment(models.Model):
-    patient = models.ForeignKey(User, on_delete=models.CASCADE)
-    doctor_name = models.CharField(max_length=100)
-    date = models.DateField()
-    queue_number = models.IntegerField(null=True, blank=True)
-    status = models.CharField(max_length=20, default='Waiting')
+class Doctor(models.Model):
+    name = models.CharField(max_length=100)
+    specialization = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.patient.username
+        return self.name
 
-
-from django.utils import timezone
 
 class Appointment(models.Model):
-    patient = models.ForeignKey(User, on_delete=models.CASCADE)
-    doctor_name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    mobile = models.CharField(max_length=15)
     date = models.DateField()
-    queue_number = models.IntegerField(null=True, blank=True)
-    status = models.CharField(max_length=20, default='Waiting')
-
-    start_time = models.DateTimeField(null=True, blank=True)
-    end_time = models.DateTimeField(null=True, blank=True)
-
-    def __str__(self):
-        return self.patient.username
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    token_number = models.CharField(max_length=10)
+    created_at = models.DateTimeField(auto_now_add=True)
