@@ -5,7 +5,7 @@ class Doctor(models.Model):
     specialization = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.specialization}"
 
 
 class Appointment(models.Model):
@@ -15,4 +15,6 @@ class Appointment(models.Model):
     date = models.DateField()
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     token_number = models.CharField(max_length=10)
-    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.token_number}"
