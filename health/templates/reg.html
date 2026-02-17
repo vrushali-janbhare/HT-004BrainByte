@@ -207,50 +207,46 @@ body{
         <h2>🩺 Book Appointment</h2>
         <p>Fill details to Book Your Appointment</p>
 
-        <form class="form-grid" method="POST">
-    {% csrf_token %}
+        <form method="post" class="form-grid">
+             {% csrf_token %}
 
-    <div class="form-group">
-        <label>First Name</label>
-        <input type="text" name="first_name" placeholder="First name" required>
-    </div>
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" placeholder="First name">
+            </div>
 
-    <div class="form-group">
-        <label>Last Name</label>
-        <input type="text" name="last_name" placeholder="Last name" required>
-    </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" placeholder="Last name">
+            </div>
 
-    <div class="form-group">
-        <label>Mobile Number</label>
-        <input type="tel" name="mobile" placeholder="Phone number" required>
-    </div>
+            <div class="form-group">
+                <label>Mobile Number</label>
+                <input type="tel" placeholder="Phone number">
+            </div>
 
-    <div class="form-group">
-        <label>Date</label>
-        <input type="date" name="date" required>
-    </div>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date">
+            </div>
 
-    <div class="form-group full">
-        <label>Select Doctor</label>
-        <select name="doctor">
-            {% for doctor in doctors %}
-            <option value="{{ doctor.id }}">
-                {{ doctor.name }} – {{ doctor.specialization }}
-            </option>
-            {% endfor %}
-        </select>
-    </div>
+            <div class="form-group full">
+                <label>Select Doctor</label>
+                <select>
+                    <option>Dr. Anjali Jadhav – General Physician</option>
+                    <option>Dr. Rahul Patil – Cardiologist</option>
+                    <option>Dr. Sneha Kale – Neurologist</option>
+                </select>
+            </div>
 
-    <!-- TOKEN BOX (Dynamic) -->
-    {% if token %}
-    <div class="token-box">
-        <h3>Your Token: {{ token }}</h3>
-        <p>Estimated Waiting Time: {{ waiting_time }} minutes</p>
-    </div>
-    {% endif %}
+            <!-- TOKEN PREVIEW -->
+            <div class="token-box">
+                <h3>Your Token: A-18</h3>
+                <p>Estimated Waiting Time: 10 minutes</p>
+            </div>
 
-    <button type="submit" class="submit-btn">Confirm Appointment</button>
-</form>
+            <button class="submit-btn">Confirm Appointment</button>
+        </form>
 
         <div class="back-link">
             <a href="index.html">← Back to Home</a>

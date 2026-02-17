@@ -1,11 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
 from .models import Doctor, Appointment
-
-def home(request):
-    return render(request, 'home.html')
-
-def reg(request):
-    return render(request, 'reg.html')
 
 def book_appointment(request):
 
@@ -18,13 +13,16 @@ def book_appointment(request):
         date = request.POST.get("date")
         doctor_id = request.POST.get("doctor")
 
-        doctor = Doctor.objects.get(id=doctor_id)
+        doctor = get_object_or_404(Doctor, id=doctor_id)
 
-        # Count today's appointments
-        count = Appointment.objects.filter(date=date, doctor=doctor).count()
+        count = Appointment.objects.filter(
+            date=date,
+            doctor=doctor,
+            status="Waiting"
+        ).count()
 
         token = f"A-{count + 1}"
-        waiting_time = count * 10   # 10 mins per patient
+        waiting_time = count * 10
 
         Appointment.objects.create(
             first_name=first_name,
@@ -32,7 +30,8 @@ def book_appointment(request):
             mobile=mobile,
             date=date,
             doctor=doctor,
-            token_number=token
+            token_number=token,
+            status="Waiting"
         )
 
         return render(request, "book.html", {
@@ -44,6 +43,21 @@ def book_appointment(request):
     return render(request, "book.html", {"doctors": doctors})
 
 
+def mark_completed(request, id):
+    appointment = get_object_or_404(Appointment, id=id)
+    appointment.status = "Completed"
+    appointment.save()
 
+    return HttpResponse(f"Appointment {id} Completed")
 
+def home(request):
+    return render(request, "home.html")
 
+def reg(request):
+    return render(request, "reg.html")
+
+def user_login(request):
+    return render(request, "login.html")
+
+def doctor_panel(request):
+    return render(request, "doctor_panel.html")
